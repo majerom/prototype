@@ -1,0 +1,78 @@
+<mat-toolbar>
+    <span>AIBOM</span>
+</mat-toolbar>
+
+<section class="search-section">
+  <div class="search-section-wrapper">
+    <input class="search" [(ngModel)]="searchText" matInput placeholder="Search for Modal">
+    <button  class="search-btn" (click)="searchModal()" mat-raised-button color="primary">Search</button>
+  </div>
+</section>
+
+<section *ngIf="searchResult" class="results-section">
+  <div class="results-section-wrapper">
+    
+    <h2>{{searchResult.name}}</h2>
+    <p>{{ searchResult.description }}</p>
+
+    <ul class="inline-details">
+      <li><strong>Version</strong> {{ searchResult.version }}</li>
+      <li><strong>License</strong> {{ searchResult.license }}</li>
+    </ul>
+
+    <div class="components-wrapper">
+      <ng-container *ngFor="let component of searchResult?.components">
+      
+        <div class="componenet-header">
+          <ul class="inline-details left-list">
+            <li>
+              <strong>Name: </strong> {{component.name}}
+            </li>
+            <li>
+              <strong>Version: </strong> {{component.version}}
+            </li>
+            <li>
+              <strong>Type: </strong> {{component.type}}
+            </li>
+            <li>
+              <strong>License: </strong> {{component.license}}
+            </li>
+          </ul>
+        </div>
+
+        <div class="componenet-body">
+          <h3>Vulnarabilities</h3> 
+          <span *ngIf="component.vulnerabilities.length === 0 ">No vulnarabilities listed </span>
+
+          <table *ngIf="component.vulnerabilities.length > 0 " class="table">
+            <thead>
+              <tr>
+                <th scope="col">CVE</th>
+                <th scope="col">Description</th>
+                <th scope="col">Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vulnerability of component.vulnerabilities">
+                <td>{{vulnerability.id}}</td>
+                <td>{{vulnerability.description}}</td>
+                <td>{{vulnerability.severity}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+ 
+      </ng-container>
+    </div>
+
+   
+    <!-- {{ searchText }}
+
+   
+
+    {{modalData | json}} -->
+  </div>
+</section>
+
+
+
